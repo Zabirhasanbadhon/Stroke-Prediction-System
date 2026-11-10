@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZaBir | Stroke Prediction System</title>
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem 0;
+        }
+
+        .main-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+        }
+
+        .header-section {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            padding: 2.5rem 2rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 15s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.3; }
+            100% { transform: scale(1); opacity: 0.5; }
+        }
+
+        .header-section h2 {
+            font-weight: 700;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header-section p {
+            font-weight: 400;
+            opacity: 0.95;
+            line-height: 1.7;
+            position: relative;
+            z-index: 1;
+            font-size: 0.95rem;
+        }
+
+        .form-section {
+            padding: 2.5rem 2rem;
+        }
+
+        .form-label-custom {
+            font-weight: 600;
+            color: #374151;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-label-custom i {
+            color: #7c3aed;
+            font-size: 1rem;
+        }
+
+        .form-control, .form-select {
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            background: #f9fafb;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: #7c3aed;
+            box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.1);
+            background: white;
+        }
+
+        .form-control:hover, .form-select:hover {
+            border-color: #a78bfa;
+        }
+
+        .input-group-custom {
+            margin-bottom: 1.25rem;
+        }
+
+        .btn-predict {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            border: none;
+            border-radius: 12px;
+            padding: 1rem 2rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-predict:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(124, 58, 237, 0.5);
+            color: white;
+        }
+
+        .btn-predict:active {
+            transform: translateY(0);
+        }
+
+        .btn-predict i {
+            margin-right: 0.5rem;
+        }
+
+        .section-title {
+            font-weight: 700;
+            color: #1f2937;
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 3px solid #7c3aed;
+            display: inline-block;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-left: 4px solid #0ea5e9;
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 2rem;
+        }
+
+        .info-box p {
+            margin: 0;
+            color: #0c4a6e;
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        .info-box i {
+            color: #0ea5e9;
+            margin-right: 0.5rem;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            border-radius: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .header-section {
+                padding: 1.5rem 1rem;
+            }
+            .header-section h2 {
+                font-size: 1.5rem;
+            }
+            .form-section {
+                padding: 1.5rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 col-xl-9">
+                <div class="main-card">
+                    <!-- Header -->
+                    <div class="header-section">
+                        <h2 class="text-center">
+                            <i class="fas fa-heartbeat me-2"></i>
+                            ZaBir ◆ Stroke Prediction
+                        </h2>
+                        <p class="text-center mb-0">
+                            Stroke is the second leading cause of death globally, responsible for approximately 11% of total deaths (WHO). 
+                            Stroke is a medical condition characterized by disrupted blood supply to the brain, leading to cellular death. 
+                            Signs and symptoms may include an inability to move or feel on one side of the body, problems understanding 
+                            or speaking, dizziness, or loss of vision to one side.
+                        </p>
+                    </div>
+
+                    <!-- Form -->
+                    <div class="form-section">
+                        <div class="info-box">
+                            <p>
+                                <i class="fas fa-info-circle"></i>
+                                Fill in the form below to predict the likelihood of a stroke based on the provided health parameters.
+                            </p>
+                        </div>
+
+                        <form method="POST">
+                            <h4 class="section-title">
+                                <i class="fas fa-user-circle me-2"></i>Personal Information
+                            </h4>
+
+                            <div class="row g-3 mb-4">
+                                <div class="col-md-6">
+                                    <div class="input-group-custom">
+                                        <label class="form-label-custom" for="age">
+                                            <i class="fas fa-birthday-cake"></i> Age
+                                        </label>
+                                        <input type="number" class="form-control" name="age" id="age" min="1" max="100" placeholder="Enter your age" required>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="input-group-custom">
+                                        <label class="form-label-custom" for="gender">
+                                            <i class="fas fa-venus-mars"></i> Gender
+                                        </label>
+                                        <select class="form-select" name="gender" id="gender" required>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="input-group-custom">
+                                        <label class="form-label-custom" for="ever_married">
+                                            <i class="fas fa-ring"></i> Ever Married
+                                        </label>
+                                        <select class="form-select" name="ever_married" id="ever_married" required>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="input-group-custom">
+                                        <label class="form-label-custom" for="work_type">
+                                            <i class="fas fa-briefcase"></i> Work Type
+                                        </label>
+                                        <select class="form-select" name="work_type" id="work_type" required>
+                                            <option value="Private">Private</option>
+                                            <option value="Self-employed">Self-employed</option>
+                                            <option value="Government job">Government job</option>
+                                            <option value="Children">Children</option>
+                                            <option value="Never Worked">Never Worked</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="input-group-custom">
+                                        <label class="form-label-custom" for="residence_type">
+                                            <i class="fas fa-home"></i> Residence Type
+                                        </label>
+                                        <select class="form-select" name="residence_type" id="residence_type" required>
+                                            <option value="Urban">Urban</option>
+                                            <option value="Rural">Rural</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h4 class="section-title">
+                                <i class="fas fa-heartbeat me-2"></i>Health Metrics
+                            </h4>
+
+                            <div class="row g-3 mb-4">
+                                <div class="col-md-6">
+                                    <div class="input-group-custom">
+                                        <label class="form-label-custom" for="hypertension">
+                                            <i class="fas fa-heart"></i> Hypertension
+                                        </label>
+                                        <select class="form-select" name="hypertension" id="hypertension" required>
+                                            <option value="0">No</option>
+                                            <option value="1">Yes</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="input-group-custom">
+                                        <label class="form-label-custom" for="heart_disease">
+                                            <i class="fas fa-heart-broken"></i> Heart Disease
+                                        </label>
+                                        <select class="form-select" name="heart_disease" id="heart_disease" required>
+                                            <option value="0">No</option>
+                                            <option value="1">Yes</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="input-group-custom">
+                                        <label class="form-label-custom" for="avg_glucose_level">
+                                            <i class="fas fa-tint"></i> Average Glucose Level
+                                        </label>
+                                        <input type="number" step="0.01" class="form-control" name="avg_glucose_level" id="avg_glucose_level" min="40.0" max="300.0" placeholder="e.g., 100.5" required>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="input-group-custom">
+                                        <label class="form-label-custom" for="bmi">
+                                            <i class="fas fa-weight"></i> BMI
+                                        </label>
+                                        <input type="number" class="form-control" name="bmi" id="bmi" min="10" max="100" placeholder="e.g., 25" required>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="input-group-custom">
+                                        <label class="form-label-custom" for="smoking_status">
+                                            <i class="fas fa-smoking"></i> Smoking Status
+                                        </label>
+                                        <select class="form-select" name="smoking_status" id="smoking_status" required>
+                                            <option value="Never Smoked">Never Smoked</option>
+                                            <option value="Formerly Smoked">Formerly Smoked</option>
+                                            <option value="Smokes">Smokes</option>
+                                            <option value="Unknown">Unknown</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="text-center mt-4">
+                                <button type="submit" class="btn btn-predict w-100">
+                                    <i class="fas fa-chart-line"></i>Predict Stroke Likelihood
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <p class="text-center text-white mt-4 mb-0" style="opacity: 0.8; font-size: 0.85rem;">
+                    <i class="fas fa-shield-alt me-1"></i>
+                    This is a predictive tool and should not replace professional medical advice.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
