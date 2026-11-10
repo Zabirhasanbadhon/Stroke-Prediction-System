@@ -250,6 +250,14 @@ Special thanks to:
 
 ---
 
+## 👨‍💻 Developer
+
+**Zabir Hasan**
+
+🌐 Website: [www.zabirhasan.com](https://www.zabirhasan.com)
+
+---
+
 <p align="center">
   <strong>🧠 Stroke Prediction Web App</strong>
   <br />
