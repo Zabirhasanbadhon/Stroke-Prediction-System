@@ -92,86 +92,6 @@ stroke-prediction/
 
 ---
 
-## 🚀 Installation & Setup
-
-### 1. Clone the Repository
-
-```bash
-git clone https://github.com/your-username/stroke-prediction.git
-```
-
-Navigate to the project directory:
-
-```bash
-cd stroke-prediction
-```
-
-### 2. Create a Virtual Environment
-
-**Windows:**
-
-```bash
-python -m venv venv
-venv\Scripts\activate
-```
-
-**macOS / Linux:**
-
-```bash
-python3 -m venv venv
-source venv/bin/activate
-```
-
-### 3. Install Dependencies
-
-Create a `requirements.txt` file:
-
-```text
-flask
-pandas
-scikit-learn
-joblib
-```
-
-Install the packages:
-
-```bash
-pip install -r requirements.txt
-```
-
-### 4. Add the Trained Model
-
-Place `model.joblib` in the project root directory, alongside `app.py`.
-
-The saved model file should contain a dictionary similar to:
-
-```python
-{
-    "model": trained_classifier,
-    "preprocessor": fitted_preprocessor,
-    "encoded_cols": encoded_columns,
-    "numeric_cols": numeric_columns
-}
-```
-
-**Note:** The model, preprocessor, and feature columns must match the training pipeline used to generate the saved file.
-
-### 5. Run the Application
-
-```bash
-python app.py
-```
-
-Open your browser and visit:
-
-```text
-http://127.0.0.1:5000
-```
-
-🎉 Your Stroke Prediction Web App is ready!
-
----
-
 ## 🧠 Machine Learning Workflow
 
 The application uses a pre-trained machine learning model saved with Joblib.
@@ -330,14 +250,6 @@ Contributions, suggestions, and improvements are welcome!
    ```
 
 5. Open a Pull Request.
-
----
-
-## 📄 License
-
-This project is licensed under the **MIT License**.
-
-See the `LICENSE` file for more information.
 
 ---
 
