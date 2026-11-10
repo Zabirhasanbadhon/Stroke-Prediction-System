@@ -147,22 +147,6 @@ The application uses the following information to generate predictions.
 
 ---
 
-## 🖼️ Application Screenshots
-
-Add your actual application screenshots inside the `docs/` directory.
-
-### Input Form
-
-![Stroke Prediction Input Form](docs/index.png)
-
-### Prediction Results
-
-| Likely | Not Likely |
-|---|---|
-| ![Likely Result](docs/result-likely.png) | ![Not Likely Result](docs/result-not-likely.png) |
-
----
-
 ## 🔧 Troubleshooting
 
 | Error / Problem | Solution |
